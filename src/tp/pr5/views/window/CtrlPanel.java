@@ -56,57 +56,11 @@ public class CtrlPanel extends JPanel implements GameObserver {
         firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
 
         //Crete Reset button
-		JButton reset = new JButton("");
-		reset.setIcon(new ImageIcon("src/tp/pr4/icons/reset.png"));
-		reset.setToolTipText("Reset");
-		reset.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {				
-				switch(inst) {
-				case PLAY_C4:
-					rules = new Connect4Rules();
-					break;
-				case PLAY_CO:
-					rules = new ComplicaRules();
-					break;
-				case PLAY_G:
-					rules = new GravityRules(col, row);
-					break;
-				case PLAY_RV:
-					rules = new ReversiRules();
-					break;
-				default:
-					rules = new Connect4Rules();
-					break;
-				}
-				controller.reset(rules);
-			}		
-		});
+		JButton reset = createResetButton();
         //Create Undo button
-        JButton undo = new JButton("");
-        undo.setIcon(new ImageIcon("src/tp/pr4/icons/undo.png"));
-        undo.setToolTipText("Undo the move");
-        undo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    controller.undo();
-                }
-                catch (Exception ex) {
-                    onUndoNotPossible();
-                }
-            }
-        });
+        JButton undo = createUndoButton();
 		//Create random move Button
-		JButton random = new JButton("");
-		random.setIcon(new ImageIcon("src/tp/pr4/icons/random.png"));
-		random.setToolTipText("Random Move");
-		random.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controller.randomMove();
-			}		
-		});
+		JButton random = createRandomButton();
 
         //Create horizontal subpanel for Undo, Reset and Random buttons
         JPanel cntrlButtonsPanel = new JPanel();
@@ -120,35 +74,31 @@ public class CtrlPanel extends JPanel implements GameObserver {
         cntrlButtonsPanel.add(random);
 
         //Create The current player text
-        JTextField turn = new JTextField();
-        turn.setEnabled(false);
-        turn.setText(player + " plays");
+        JTextField turn = createCurrentPlayerText(player);
         //Mount the text panel
         firstPanel.add(turn);
 
         //Create panel to change game
+		JPanel secondPanel = createChangeGamePanel();
+		
+		//Add all of the panels to the Central panel
+		this.add(firstPanel, BorderLayout.PAGE_START);
+        this.add(cntrlButtonsPanel, BorderLayout.CENTER);
+        this.add(secondPanel, BorderLayout.PAGE_END);
+		this.revalidate();
+	}
+	
+	private JPanel createChangeGamePanel() {
 		JPanel secondPanel = new JPanel();
 		secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
 		String[] instructions = {inst.toString(Instruction.PLAY_C4), 
 									inst.toString(Instruction.PLAY_CO), 
 									inst.toString(Instruction.PLAY_G),
 									inst.toString(Instruction.PLAY_RV)};
+
+		final JTextArea height = createNumberTextArea("Height");
 		
-		final JTextArea height = new JTextArea(1, 1);
-		height.setText("Height");
-		height.setEditable(true);
-		height.setEnabled(false);
-		height.setVisible(false);
-		height.setPreferredSize(new Dimension(0, 10));
-		height.addFocusListener(new BoardMeasureHintFocusListener(height.getText(), height));
-		
-		final JTextArea width = new JTextArea(1, 1);
-		width.setText("Width");
-		width.setEditable(true);
-		width.setEnabled(false);
-		width.setVisible(false);
-		height.setPreferredSize(new Dimension(0, 10));
-		width.addFocusListener(new BoardMeasureHintFocusListener(width.getText(), width));
+		final JTextArea width = createNumberTextArea("Width");
 		
 		final JComboBox<String> list = new JComboBox<String>(instructions);
 		list.setPreferredSize(new Dimension(30, 30));
@@ -202,13 +152,94 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		secondPanel.add(height);
 		secondPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		secondPanel.add(change);
-		//Add all of the panles to the Central panel
-		this.add(firstPanel, BorderLayout.PAGE_START);
-        this.add(cntrlButtonsPanel, BorderLayout.CENTER);
-        this.add(secondPanel, BorderLayout.PAGE_END);
-		this.revalidate();
+		return secondPanel;
 	}
-	
+
+	private JButton createChangeButton() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private JTextArea createNumberTextArea(String name) {
+		final JTextArea text = new JTextArea(1, 1);
+		text.setText(name);
+		text.setEditable(true);
+		text.setEnabled(false);
+		text.setVisible(false);
+		text.setPreferredSize(new Dimension(0, 10));
+		text.addFocusListener(new BoardMeasureHintFocusListener(text.getText(), text));
+		return text;
+	}
+
+	private JTextField createCurrentPlayerText(Counter player) { 
+		JTextField turn = new JTextField();
+		turn.setEnabled(false);
+		turn.setText(player + " plays");// TODO Auto-generated method stub
+		return turn;
+	}
+
+	private JButton createRandomButton() {
+		JButton random =  new JButton("");
+		random.setIcon(new ImageIcon("src/tp/pr4/icons/random.png"));
+		random.setToolTipText("Random Move");
+		random.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.randomMove();
+			}		
+		});
+
+		return random;
+	}
+
+	private JButton createUndoButton() {
+		JButton undo = new JButton("");
+        undo.setIcon(new ImageIcon("src/tp/pr4/icons/undo.png"));
+        undo.setToolTipText("Undo the move");
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.undo();
+                }
+                catch (Exception ex) {
+                    onUndoNotPossible();
+                }
+            }
+        });
+		return undo;
+	}
+
+	private JButton createResetButton() {
+		JButton reset = new JButton("");
+		reset.setIcon(new ImageIcon("src/tp/pr4/icons/reset.png"));
+		reset.setToolTipText("Reset");
+		reset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				switch(inst) {
+				case PLAY_C4:
+					rules = new Connect4Rules();
+					break;
+				case PLAY_CO:
+					rules = new ComplicaRules();
+					break;
+				case PLAY_G:
+					rules = new GravityRules(col, row);
+					break;
+				case PLAY_RV:
+					rules = new ReversiRules();
+					break;
+				default:
+					rules = new Connect4Rules();
+					break;
+				}
+				controller.reset(rules);
+			}		
+		});
+		return reset;
+	}
+
 	@Override
 	public void reset(ReadOnlyBoard board, Counter player, Boolean undoPossible) {
 		initGUI(player);
