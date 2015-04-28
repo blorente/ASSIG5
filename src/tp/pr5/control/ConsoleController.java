@@ -23,7 +23,6 @@ public class ConsoleController extends Controller {
 	private ConsoleView view;
 
 	public ConsoleController(GameTypeFactory factory, Game g) {
-		// TODO Auto-generated constructor stub
 		this.game = g;
 		this.factory = factory;
 		this.in = new Scanner(System.in);
@@ -80,7 +79,6 @@ public class ConsoleController extends Controller {
 				this.rules = this.factory.createRules();
 				this.game.reset(this.rules);
 				initializePlayers();
-				System.out.println("Game restarted.");
 				break;
 			case PLAY_G:
 				try {
@@ -91,11 +89,10 @@ public class ConsoleController extends Controller {
 						this.rules = this.factory.createRules();
 					}
 				} catch (NumberFormatException e) {
-					System.err.println("Invalid row or column number.");
+					//System.err.println("Invalid row or column number.");
 				}
 				this.game.reset(this.rules);
 				initializePlayers();
-				System.out.println("Game restarted.");
 				break;
 			case PLAYER:
 				Counter colour = null;
@@ -110,9 +107,9 @@ public class ConsoleController extends Controller {
 								.createHumanPlayerAtConsole(this.in);
 					}
 					// this.game.reset(this.rules);
-					// System.out.println("Game restarted.");
+					
 				} catch (IllegalArgumentException e) {
-					System.err.println("Invalid move, please try again.");
+					//System.err.println("Invalid move, please try again.");
 				}
 				break;
 			case HELP:
@@ -123,9 +120,6 @@ public class ConsoleController extends Controller {
 			}
 
 		}
-
-		System.out.println("Closing the game... ");
-
 	}
 
 	private Instruction readInstruction(Scanner in) {

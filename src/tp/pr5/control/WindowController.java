@@ -1,13 +1,10 @@
 package tp.pr5.control;
 
-import java.util.Scanner;
-
 import tp.pr5.logic.Counter;
 import tp.pr5.logic.Game;
 import tp.pr5.logic.GameRules;
 import tp.pr5.logic.InvalidMove;
 import tp.pr5.logic.Move;
-import tp.pr5.views.console.ConsoleView;
 import tp.pr5.views.window.MainWindow;
 
 public class WindowController extends Controller {

@@ -1,8 +1,5 @@
 package tp.pr5;
 
-import java.util.Scanner;
-
-import tp.pr5.control.*;
 import tp.pr5.control.ArgumentInterpreter;
 import tp.pr5.control.ComplicaFactory;
 import tp.pr5.control.Connect4Factory;

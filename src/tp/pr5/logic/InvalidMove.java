@@ -1,7 +1,6 @@
 package tp.pr5.logic;
 
 import java.io.Serializable;
-import java.lang.String;
 
 public class InvalidMove extends Exception implements Serializable {
 	/**

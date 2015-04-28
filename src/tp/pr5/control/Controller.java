@@ -1,21 +1,17 @@
 package tp.pr5.control;
 
-import tp.pr5.logic.*;
+import java.util.Scanner;
+
 import tp.pr5.logic.Counter;
 import tp.pr5.logic.Game;
 import tp.pr5.logic.GameRules;
 
-import java.util.Scanner;
-
 public abstract class Controller {
 
-	private Game game;
 	private Scanner in;
-	private GameRules rules;
 	private Player[] players;
 	
 	private GameTypeFactory factory;
-	private int numPlayer;
 	private String[] tokens;
 	/*
 	public Controller(GameTypeFactory factory, Game g, java.util.Scanner in) {

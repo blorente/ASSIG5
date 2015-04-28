@@ -17,6 +17,7 @@ public class ConsoleView implements GameObserver {
 
 	@Override
 	public void reset(ReadOnlyBoard board, Counter player, Boolean undoPossible) {
+		System.out.println(board);
 		System.out.println("Game restarted.");
 	}
 

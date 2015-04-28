@@ -1,5 +1,4 @@
 package tp.pr5.control;
-import tp.pr5.logic.*;
 import tp.pr5.logic.Counter;
 import tp.pr5.logic.Move;
 import tp.pr5.logic.ReadOnlyBoard;

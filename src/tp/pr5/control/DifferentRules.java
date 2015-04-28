@@ -1,6 +1,5 @@
 package tp.pr5.control;
 
-import tp.pr5.logic.*;
 import tp.pr5.logic.ComplicaRules;
 import tp.pr5.logic.Connect4Rules;
 import tp.pr5.logic.GameRules;

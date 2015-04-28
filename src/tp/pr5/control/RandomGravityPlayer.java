@@ -2,7 +2,6 @@ package tp.pr5.control;
 
 import java.util.Random;
 
-import tp.pr5.logic.*;
 import tp.pr5.logic.Board;
 import tp.pr5.logic.Counter;
 import tp.pr5.logic.GravityMove;

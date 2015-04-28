@@ -14,7 +14,6 @@ import tp.pr5.control.WindowController;
 import tp.pr5.logic.ComplicaRules;
 import tp.pr5.logic.Counter;
 import tp.pr5.logic.GameObserver;
-import tp.pr5.logic.GameRules;
 import tp.pr5.logic.Observable;
 import tp.pr5.logic.ReadOnlyBoard;
 

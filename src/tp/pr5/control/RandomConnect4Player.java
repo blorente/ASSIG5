@@ -1,7 +1,5 @@
 package tp.pr5.control;
 
-import tp.pr5.logic.*;
-
 import java.util.Random;
 
 import tp.pr5.Util;
