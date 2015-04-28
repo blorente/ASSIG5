@@ -8,6 +8,7 @@ import tp.pr5.control.Controller;
 import tp.pr5.control.GameType;
 import tp.pr5.control.GameTypeFactory;
 import tp.pr5.control.GravityFactory;
+import tp.pr5.control.ReversiFactory;
 import tp.pr5.control.WindowController;
 import tp.pr5.logic.Game;
 
@@ -105,6 +106,11 @@ public class Main {
                     factory = new ComplicaFactory();
                     game = new Game(factory.createRules());
                     break;
+                case REVERSI:
+                    factory = new ReversiFactory();
+                    game = new Game(factory.createRules());
+                    break;
+
 			default:
 				break;
             }

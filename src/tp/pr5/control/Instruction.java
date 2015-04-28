@@ -1,7 +1,7 @@
 package tp.pr5.control;
 
 public enum Instruction {
-	MOVE, UNDO, RESTART, EXIT, ERROR, PLAY_C4, PLAY_CO, PLAY_G, PLAYER, HELP;
+	MOVE, UNDO, RESTART, EXIT, ERROR, PLAY_C4, PLAY_CO, PLAY_G, PLAY_RV, PLAYER, HELP;
 	
 	
 	public String toString(Instruction inst) {
@@ -30,6 +30,9 @@ public enum Instruction {
 			break;
 		case PLAY_G:
 			instruction = "Gravity";
+			break;
+		case PLAY_RV:
+			instruction = "Reversi";
 			break;
 		case RESTART:
 			instruction = "Reset";

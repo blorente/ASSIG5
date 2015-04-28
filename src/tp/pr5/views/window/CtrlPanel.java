@@ -29,6 +29,7 @@ import tp.pr5.logic.GameRules;
 import tp.pr5.logic.GravityRules;
 import tp.pr5.logic.Observable;
 import tp.pr5.logic.ReadOnlyBoard;
+import tp.pr5.logic.ReversiRules;
 
 public class CtrlPanel extends JPanel implements GameObserver {
 	
@@ -70,6 +71,9 @@ public class CtrlPanel extends JPanel implements GameObserver {
 					break;
 				case PLAY_G:
 					rules = new GravityRules(col, row);
+					break;
+				case PLAY_RV:
+					rules = new ReversiRules();
 					break;
 				default:
 					rules = new Connect4Rules();
@@ -125,7 +129,10 @@ public class CtrlPanel extends JPanel implements GameObserver {
         //Create panel to change game
 		JPanel secondPanel = new JPanel();
 		secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
-		String[] instructions = {inst.toString(Instruction.PLAY_C4), inst.toString(Instruction.PLAY_CO), inst.toString(Instruction.PLAY_G)};
+		String[] instructions = {inst.toString(Instruction.PLAY_C4), 
+									inst.toString(Instruction.PLAY_CO), 
+									inst.toString(Instruction.PLAY_G),
+									inst.toString(Instruction.PLAY_RV)};
 		
 		final JTextArea height = new JTextArea(1, 1);
 		height.setText("Height");
@@ -226,6 +233,9 @@ public class CtrlPanel extends JPanel implements GameObserver {
 				case PLAY_G:
 					this.rules = new GravityRules(col, row);
 					break;
+				case PLAY_RV:
+					this.rules = new ReversiRules();
+					break;
 				default:
 					this.rules = new Connect4Rules();
 					break;
@@ -319,7 +329,6 @@ public class CtrlPanel extends JPanel implements GameObserver {
 
 		@Override
 		public void focusLost(FocusEvent e) {
-			// TODO Auto-generated method stub
 			
 		}
 	}

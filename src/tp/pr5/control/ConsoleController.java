@@ -94,6 +94,12 @@ public class ConsoleController extends Controller {
 				this.game.reset(this.rules);
 				initializePlayers();
 				break;
+			case PLAY_RV:
+				this.factory = new ReversiFactory();
+				this.rules = this.factory.createRules();
+				this.game.reset(this.rules);
+				initializePlayers();
+				break;
 			case PLAYER:
 				Counter colour = null;
 				try {
@@ -144,6 +150,9 @@ public class ConsoleController extends Controller {
 				} else if ((this.tokens[0] + " " + this.tokens[1])
 						.equals("PLAY CO")) {
 					instString = "PLAY_CO";
+				} else if ((this.tokens[0] + " " + this.tokens[1])
+						.equals("PLAY RV")) {
+					instString = "PLAY_RV";
 				}
 				break;
 			case 3:
@@ -202,7 +211,7 @@ public class ConsoleController extends Controller {
 				+ "\n"
 				+ "RESTART: restart the game."
 				+ "\n"
-				+ "PLAY [c4|co|gr] [dimX dimY]: change the type of game."
+				+ "PLAY [c4|co|gr|rv] [dimX dimY]: change the type of game."
 				+ "\n"
 				+ "PLAYER [white|black] [human|random]: change the type of game."
 				+ "\n" + "EXIT: exit the application." + "\n"

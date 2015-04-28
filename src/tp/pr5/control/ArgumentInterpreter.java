@@ -22,7 +22,9 @@ public class ArgumentInterpreter {
            type = GameType.CONNECT4;
        } else if (tokens[1].equals("co")) {
            type = GameType.COMPLICA;
-       } else {
+       } else if (tokens[1].equals("rv")) {
+           type = GameType.REVERSI;
+       }else {
            type = GameType.ERROR;
        }
         return type;
@@ -55,7 +57,7 @@ public class ArgumentInterpreter {
 
     public String getHelp() {
         return "usage: tp.pr3.Main [-g <game>] [-h] [-x <columnNumber>] [-y <rowNumber>]" + "\n" +
-                " -g,--game <game>           Type of game (c4, co, gr). By default, c4." + "\n"  +
+                " -g,--game <game>           Type of game (c4, co, gr, rv). By default, c4." + "\n"  +
                 " -h,--help                  Displays this help." + "\n" +
                 " -u,--ui <tipo>             Type of interface (console, window)."+ "\n" +
                 "                            By default, console."+ "\n" +

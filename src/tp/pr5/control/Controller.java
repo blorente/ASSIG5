@@ -3,8 +3,6 @@ package tp.pr5.control;
 import java.util.Scanner;
 
 import tp.pr5.logic.Counter;
-import tp.pr5.logic.Game;
-import tp.pr5.logic.GameRules;
 
 public abstract class Controller {
 
@@ -35,107 +33,7 @@ public abstract class Controller {
 	 */
 	abstract public void run();
 	
-	/*public void run() {
-		Instruction inst = Instruction.ERROR;
-		String currentTurn;
-
-		boolean correctUndo = false;
-
-		while (!this.game.isFinished() && !(inst.equals(Instruction.EXIT))) {
-			System.out.println(this.game.getBoard());
-			currentTurn = this.game.getTurn().toString();			
-			System.out.println(currentTurn + " to move");
-		
-			
-				inst = readInstruction(this.in);
-				switch (inst) {
-				case MOVE:
-					Move mov = players[this.numPlayer].getMove(
-							this.game.getBoard(), this.game.getTurn());
-					try {
-						this.game.executeMove(mov);
-						this.numPlayer = this.getNextPlayerIndex(this.game
-								.getTurn());
-					} catch (InvalidMove e) {
-						System.err.println(e.getMessage());
-					}
-					break;
-				case UNDO:
-					correctUndo = this.game.undo();
-					if (!correctUndo) {
-						System.err.println("Nothing to undo.");
-					}
-					break;
-				case RESTART:
-					this.game.reset(this.rules);
-					System.out.println("Game restarted.");
-					break;
-				case ERROR:
-					// // non existing command
-					// System.err.println("Invalid move, please try again.");
-					break;
-				case EXIT:
-					System.out.println("Exit requested. ");
-					break;
-				case PLAY_C4:
-					this.factory = new Connect4Factory();
-					this.rules = this.factory.createRules();
-					this.game.reset(this.rules);
-					initializePlayers();
-					System.out.println("Game restarted.");
-					break;
-				case PLAY_CO:
-					this.factory = new ComplicaFactory();
-					this.rules = this.factory.createRules();
-					this.game.reset(this.rules);
-					initializePlayers();
-					System.out.println("Game restarted.");
-					break;
-				case PLAY_G:
-						try {
-							if (tokens.length == 4) {
-								this.factory = new GravityFactory(
-										Integer.parseInt(this.tokens[2]),
-										Integer.parseInt(this.tokens[3]));							
-									this.rules = this.factory.createRules();
-							}
-						} catch (NumberFormatException e) {
-							System.err.println("Invalid row or column number.");
-						}
-						this.game.reset(this.rules);
-						initializePlayers();
-						System.out.println("Game restarted.");
-					break;
-				case PLAYER:
-					Counter colour = null;
-					try {
-						colour = Counter.valueOf(this.tokens[1]);
-						if (this.tokens[2].equals("RANDOM")) {
-							this.players[this.getNextPlayerIndex(colour)] = factory
-									.createRandomPlayer();
-							
-						} else if (this.tokens[2].equals("HUMAN")) {
-							this.players[this.getNextPlayerIndex(colour)] = factory
-									.createHumanPlayerAtConsole(this.in);
-						}
-//						this.game.reset(this.rules);
-//						System.out.println("Game restarted.");
-					} catch (IllegalArgumentException e) {
-						System.err.println("Invalid move, please try again.");
-					}
-					break;
-				case HELP:
-					System.out.println(getHelpString());
-					break;
-				default:
-					break;
-				}
-			
-		}
-		
-		System.out.println("Closing the game... ");
-	}	*/
-
+/*
 	private Instruction readInstruction(Scanner in) {
 		//We initialize to move for the random player
 		Instruction inst = Instruction.MOVE;
@@ -186,7 +84,11 @@ public abstract class Controller {
 		
 		return inst;
 	}
-
+	*/
+	public String[] getTokens() {
+		return tokens;
+	}
+	/*
 	private int getNextPlayerIndex(Counter colour) {
 		int i = 0;
 		if (colour == Counter.BLACK) {
@@ -201,9 +103,7 @@ public abstract class Controller {
 		}
 	}
 
-	public String[] getTokens() {
-		return tokens;
-	}
+	
 
 	private String getHelpString() {
 		String help = "The available commands are:"
@@ -217,12 +117,12 @@ public abstract class Controller {
 				+ "\n"
 				+ "RESTART: restart the game."
 				+ "\n"
-				+ "PLAY [c4|co|gr] [dimX dimY]: change the type of game."
+				+ "PLAY [c4|co|gr|rv] [dimX dimY]: change the type of game."
 				+ "\n"
 				+ "PLAYER [white|black] [human|random]: change the type of game."
 				+ "\n" + "EXIT: exit the application." + "\n"
 				+ "HELP: show this help." + "\n";
 		return help;
-	}
+	}*/
 
 }
