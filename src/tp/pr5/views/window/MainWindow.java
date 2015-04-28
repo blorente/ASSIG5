@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,7 +31,7 @@ public class MainWindow extends JFrame implements GameObserver {
 	private JPanel quitPanel;
 	
 	public MainWindow(Observable<GameObserver> g, WindowController c) {	
-		super("Assignment 4");
+		super("[=] Assignment 5 [=]");
         this.setSize(700, 500);
 		this.controller = c;
 		this.game = g;
@@ -42,14 +43,19 @@ public class MainWindow extends JFrame implements GameObserver {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		this.setContentPane(mainPanel);
 		
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		
 		this.brdPanel = new BoardPanel(this.controller, this.game);//Nested Class
 		this.ctrlPanel = new CtrlPanel(game, controller, controller.getRules()); // Nested Class
 		this.quitPanel = createQuitPanel();
 		
-		mainPanel.add(this.brdPanel, BorderLayout.CENTER);
-		mainPanel.add(this.ctrlPanel, BorderLayout.LINE_END);
-		mainPanel.add(this.quitPanel, BorderLayout.PAGE_END);
+		contentPanel.add(this.brdPanel);
+		contentPanel.add(this.ctrlPanel);
+		contentPanel.setVisible(true);
 		
+		mainPanel.add(contentPanel, BorderLayout.CENTER);
+		mainPanel.add(this.quitPanel, BorderLayout.PAGE_END);		
 		
 		mainPanel.setVisible(true);
 		this.setVisible(true);
