@@ -46,10 +46,10 @@ public class BoardPanel extends JPanel implements GameObserver{
 		button.setPreferredSize(new Dimension(40, 40));
 		switch(colour) {
 		case BLACK:
-			button.setIcon(new ImageIcon("src/tp/pr4/icons/black.png"));
+			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "black.png"));
 			break;
 		case WHITE:
-			button.setIcon(new ImageIcon("src/tp/pr4/icons/white.png"));
+			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "white.png"));
 			break;
 		default:
 			

@@ -20,6 +20,8 @@ import tp.pr5.logic.ReadOnlyBoard;
 
 public class MainWindow extends JFrame implements GameObserver {
 	
+	public static final String ICONS_FILEPATH = "src/tp/pr5/icons/";
+	
 	/**
 	 * 
 	 */
@@ -66,7 +68,7 @@ public class MainWindow extends JFrame implements GameObserver {
 	private JPanel createQuitPanel() {
 		JPanel quitPanel = new JPanel();
 		JButton quit = new JButton("");
-		quit.setIcon(new ImageIcon("src/tp/pr4/icons/exit.png"));
+		quit.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "exit.png"));
 		quit.setToolTipText("Exit");
 		quit.addActionListener(new ActionListener() {
 			String[] options = {"Yes", "No"};

@@ -3,6 +3,7 @@ package tp.pr5.views.window;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -37,6 +38,8 @@ public class CtrlPanel extends JPanel implements GameObserver {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final int CONTROL_BUTTON_WIDTH_PX = 50;
+	private static final int CONTROL_BUTTON_HEIGHT_PX = 50;	
 	private WindowController controller;
 	private Instruction inst;
 	private int col, row;
@@ -61,14 +64,9 @@ public class CtrlPanel extends JPanel implements GameObserver {
         JButton undo = createUndoButton();
 		//Create random move Button
 		JButton random = createRandomButton();
-
         //Create horizontal subpanel for Undo, Reset and Random buttons
-        JPanel cntrlButtonsPanel = new JPanel();
-        cntrlButtonsPanel.setLayout(new BoxLayout(cntrlButtonsPanel, BoxLayout.X_AXIS));
-        cntrlButtonsPanel.setSize(this.getWidth(), 200);
-        cntrlButtonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        cntrlButtonsPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
-
+        JPanel cntrlButtonsPanel = createControlButtonsPanel();
+        //Add the stuffs to the panel
         cntrlButtonsPanel.add(reset);
         cntrlButtonsPanel.add(undo);
         cntrlButtonsPanel.add(random);
@@ -88,6 +86,15 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		this.revalidate();
 	}
 	
+	private JPanel createControlButtonsPanel() {
+		 JPanel cntrlButtonsPanel = new JPanel();
+        cntrlButtonsPanel.setLayout(new GridLayout());
+        cntrlButtonsPanel.setSize(this.getWidth(), 100);
+        cntrlButtonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cntrlButtonsPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
+		return cntrlButtonsPanel;
+	}
+
 	private JPanel createChangeGamePanel() {
 		JPanel secondPanel = new JPanel();
 		secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
@@ -155,11 +162,6 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		return secondPanel;
 	}
 
-	private JButton createChangeButton() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	private JTextArea createNumberTextArea(String name) {
 		final JTextArea text = new JTextArea(1, 1);
 		text.setText(name);
@@ -174,14 +176,15 @@ public class CtrlPanel extends JPanel implements GameObserver {
 	private JTextField createCurrentPlayerText(Counter player) { 
 		JTextField turn = new JTextField();
 		turn.setEnabled(false);
-		turn.setText(player + " plays");// TODO Auto-generated method stub
+		turn.setText(player + " plays");
 		return turn;
 	}
 
 	private JButton createRandomButton() {
 		JButton random =  new JButton("");
-		random.setIcon(new ImageIcon("src/tp/pr4/icons/random.png"));
+		random.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "random.png"));
 		random.setToolTipText("Random Move");
+		random.setPreferredSize(new Dimension(CONTROL_BUTTON_WIDTH_PX, CONTROL_BUTTON_HEIGHT_PX));
 		random.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -194,8 +197,9 @@ public class CtrlPanel extends JPanel implements GameObserver {
 
 	private JButton createUndoButton() {
 		JButton undo = new JButton("");
-        undo.setIcon(new ImageIcon("src/tp/pr4/icons/undo.png"));
+        undo.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "undo.png"));
         undo.setToolTipText("Undo the move");
+        undo.setPreferredSize(new Dimension(CONTROL_BUTTON_WIDTH_PX, CONTROL_BUTTON_HEIGHT_PX));
         undo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -212,8 +216,9 @@ public class CtrlPanel extends JPanel implements GameObserver {
 
 	private JButton createResetButton() {
 		JButton reset = new JButton("");
-		reset.setIcon(new ImageIcon("src/tp/pr4/icons/reset.png"));
+		reset.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "reset.png"));
 		reset.setToolTipText("Reset");
+		reset.setPreferredSize(new Dimension(CONTROL_BUTTON_WIDTH_PX, CONTROL_BUTTON_HEIGHT_PX));
 		reset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
