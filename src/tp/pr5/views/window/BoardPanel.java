@@ -1,16 +1,19 @@
 package tp.pr5.views.window;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import tp.pr5.control.WindowController;
 import tp.pr5.logic.ComplicaRules;
@@ -44,7 +47,7 @@ public class BoardPanel extends JPanel implements GameObserver{
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.weighty = 1;
-		this.setPreferredSize(new Dimension(this.preferredWidth, this.preferredHeight));
+		this.setPreferredSize(new Dimension(this.preferredWidth, this.preferredHeight));			
 	}
 
 	private void createButtons(ReadOnlyBoard board) {

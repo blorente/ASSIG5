@@ -1,6 +1,7 @@
 package tp.pr5.views.window;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -19,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import tp.pr5.control.Instruction;
 import tp.pr5.control.WindowController;
@@ -53,8 +56,9 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		g.addObserver(this);
 	}
 
-	private void initGUI(final Counter player) {
+	private void initGUI(final Counter player) {		
 		this.removeAll();
+		Border b = BorderFactory.createLineBorder(Color.BLACK, 3);
 		JPanel firstPanel = new JPanel();
         firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
         
@@ -70,14 +74,17 @@ public class CtrlPanel extends JPanel implements GameObserver {
         cntrlButtonsPanel.add(reset);
         cntrlButtonsPanel.add(undo);
         cntrlButtonsPanel.add(random);
+        cntrlButtonsPanel.setBorder(BorderFactory.createTitledBorder(b, "Control Panel"));
 
         //Create The current player text
         JTextField turn = createCurrentPlayerText(player);
+        turn.setBorder(BorderFactory.createTitledBorder(b, "Who's Turn is it?"));
         //Mount the text panel
         firstPanel.add(turn);
 
         //Create panel to change game
 		JPanel secondPanel = createChangeGamePanel();
+		secondPanel.setBorder(BorderFactory.createTitledBorder(b, "Change Game"));
 		
 		//Add all of the panels to the Central panel
 		this.add(firstPanel, BorderLayout.PAGE_START);

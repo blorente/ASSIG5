@@ -37,8 +37,6 @@ public class ConsoleController extends Controller {
 	@Override
 	public void run() {
 		Instruction inst = Instruction.ERROR;
-		boolean correctUndo;
-		
 		while (!this.game.isFinished() && !(inst.equals(Instruction.EXIT))) {
             inst = readInstruction(this.in);
 			switch (inst) {
@@ -52,7 +50,7 @@ public class ConsoleController extends Controller {
 			
 				break;
 			case UNDO:
-				correctUndo = this.game.undo();			
+				this.game.undo();			
 				break;
 			case RESTART:
 				this.game.reset(this.rules);

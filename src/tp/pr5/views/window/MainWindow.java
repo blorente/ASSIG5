@@ -2,15 +2,18 @@ package tp.pr5.views.window;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import tp.pr5.control.WindowController;
 import tp.pr5.logic.Counter;
@@ -46,7 +49,7 @@ public class MainWindow extends JFrame implements GameObserver {
 		this.setContentPane(mainPanel);
 		
 		JPanel contentPanel = new JPanel();
-		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));		
 		
 		this.brdPanel = new BoardPanel(this.controller, this.game);
 		this.ctrlPanel = new CtrlPanel(game, controller, controller.getRules());
