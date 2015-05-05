@@ -63,16 +63,16 @@ public class BoardPanel extends JPanel implements GameObserver{
 			
 			break;
 		}
-		if (this.ctrl.getRules().getClass() == ComplicaRules.class || colour == Counter.EMPTY) {
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (active) {
-						ctrl.makeMove(col + 1, row + 1, player);
-					}	
-				}
-			});
-		}
+		
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (active) {
+					ctrl.makeMove(col + 1, row + 1, player);
+				}	
+			}
+		});
+		
 		return button;		
 	}
 
