@@ -57,7 +57,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		this.removeAll();
 		JPanel firstPanel = new JPanel();
         firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
-
+        
         //Crete Reset button
 		JButton reset = createResetButton();
         //Create Undo button
@@ -88,8 +88,8 @@ public class CtrlPanel extends JPanel implements GameObserver {
 	
 	private JPanel createControlButtonsPanel() {
 		 JPanel cntrlButtonsPanel = new JPanel();
-        cntrlButtonsPanel.setLayout(new GridLayout());
-        cntrlButtonsPanel.setSize(this.getWidth(), 100);
+        cntrlButtonsPanel.setLayout(new BoxLayout(cntrlButtonsPanel, BoxLayout.X_AXIS));
+        cntrlButtonsPanel.setSize(this.getWidth(), CONTROL_BUTTON_HEIGHT_PX);
         cntrlButtonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         cntrlButtonsPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
 		return cntrlButtonsPanel;
@@ -142,7 +142,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 					}
 					catch (NumberFormatException e2) {
 						JOptionPane.showMessageDialog(new JFrame(),
-								"Input are supposed to be a number", "Bad input!",
+								"Input are supposed to be numbers", "Bad input!",
 								JOptionPane.ERROR_MESSAGE);
 					}	
 				}
