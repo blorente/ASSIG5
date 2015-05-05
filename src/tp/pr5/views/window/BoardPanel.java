@@ -21,15 +21,19 @@ import tp.pr5.logic.ReadOnlyBoard;
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel implements GameObserver{
 	
+	private static final int CELL_HEIGHT = 40;
+	private static final int CELL_WIDTH = 40;
 	private WindowController ctrl;
 	private JButton[][] buttons;
 	private GridBagConstraints c;
 	private boolean active;
+	private int preferredWidth = 10000;
+	private int preferredHeight = 10000;
 	
 	public BoardPanel(WindowController ctrl, Observable<GameObserver> game) {
 		this.ctrl = ctrl;
 		initGUI();
-		game.addObserver(this);
+		game.addObserver(this);		
 	}
 	
 	private void initGUI() {
@@ -38,12 +42,16 @@ public class BoardPanel extends JPanel implements GameObserver{
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.weighty = 1;
-		this.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
+		this.setPreferredSize(new Dimension(this.preferredWidth, this.preferredHeight));
+	}
+
+	private void measureSelf() {
+		
 	}
 
 	private JButton createButton (final int col, final int row, final Counter player, Counter colour) {
 		JButton button = new JButton();
-		button.setPreferredSize(new Dimension(40, 40));
+		button.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
 		switch(colour) {
 		case BLACK:
 			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "black.png"));
@@ -79,9 +87,14 @@ public class BoardPanel extends JPanel implements GameObserver{
 				//setButtonDisabled(i,j, board.getPosition(i, j));
 				this.c.gridy = j;
 				this.add(createButton(i, j,  player, board.getPosition(i + 1, j + 1)), c);
-			}
+			}			
 		}
-        this.revalidate();
+		
+		if (CELL_HEIGHT * board.getHeight() < this.preferredHeight)this.preferredHeight = CELL_HEIGHT * board.getHeight();
+		if (CELL_WIDTH * board.getWidth() < this.preferredWidth)this.preferredWidth = CELL_WIDTH * board.getWidth();
+		this.setPreferredSize(new Dimension(this.preferredWidth, this.preferredHeight));
+        
+		this.revalidate();
         this.active = true;
 	}
 	
