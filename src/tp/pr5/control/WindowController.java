@@ -81,4 +81,8 @@ public class WindowController extends Controller {
     public GameRules getRules() {
         return rules;
     }
+    
+    public Counter getPlayer() {
+    	return this.game.getTurn();
+    }
 }

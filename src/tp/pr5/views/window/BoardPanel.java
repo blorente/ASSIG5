@@ -47,48 +47,46 @@ public class BoardPanel extends JPanel implements GameObserver{
 		this.setPreferredSize(new Dimension(this.preferredWidth, this.preferredHeight));
 	}
 
-	private void measureSelf() {
-		
-	}
-
-	private JButton createButton (final int col, final int row, final Counter player, Counter colour) {
-		JButton button = new JButton();
-		button.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
-		switch(colour) {
-		case BLACK:
-			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "black.png"));
-			break;
-		case WHITE:
-			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "white.png"));
-			break;
-		default:
-			
-			break;
-		}
-		
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (active) {
-						ctrl.makeMove(col + 1, row + 1, player);
-					}	
-				}
-			});
-			
-		return button;		
-	}
-
-	public void UpdateView(Counter player, ReadOnlyBoard board) {
+	private void createButtons(ReadOnlyBoard board) {
 		this.buttons = new JButton[board.getWidth()][board.getHeight()];
 		this.removeAll();
 		
 		for (int i = 0; i < board.getWidth(); i++) {
 			this.c.gridx = i;
-			for (int j = 0; j < board.getHeight(); j++) {
-				//this.buttons[i][j] = createButton(i, j,  player, board.getPosition(i + 1, j + 1));
-				//setButtonDisabled(i,j, board.getPosition(i, j));
+			for (int j = 0; j < board.getHeight(); j++) {				
 				this.c.gridy = j;
-				this.add(createButton(i, j,  player, board.getPosition(i + 1, j + 1)), c);
+				JButton button = createButton(i, j,  board.getPosition(i + 1, j + 1), board.getPosition(i + 1, j + 1));
+				this.add(button, c);
+				this.buttons[i][j] = button;
+			}			
+		}		
+		this.updateView(board);
+		this.revalidate();
+        this.active = true;
+		
+	}
+	
+	private JButton createButton (final int col, final int row, final Counter player, Counter colour) {
+		JButton button = new JButton();
+		button.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));		
+		
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (active) {
+					ctrl.makeMove(col + 1, row + 1, ctrl.getPlayer());
+				}	
+			}
+		});
+		
+		return button;		
+	}
+
+	public void updateView(ReadOnlyBoard board) {			
+		
+		for (int i = 0; i < board.getWidth(); i++) {			
+			for (int j = 0; j < board.getHeight(); j++) {
+				this.updateButton(this.buttons[i][j],  board.getPosition(i + 1, j + 1));				
 			}			
 		}
 		
@@ -100,17 +98,30 @@ public class BoardPanel extends JPanel implements GameObserver{
         this.active = true;
 	}
 	
+	private void updateButton(JButton button, Counter position) {
+		switch(position) {
+		case BLACK:
+			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "black.png"));
+			break;
+		case WHITE:
+			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "white.png"));
+			break;
+		default:
+			
+			break;
+		}
+	}	
 	
 	@Override
 	public void onGameOver(ReadOnlyBoard board, Counter winner) {
 		this.active = false;
-		this.UpdateView(winner, board);
+		this.updateView(board);
 	}
 
 	@Override
 	public void moveExecFinished(ReadOnlyBoard board, Counter player,
 			Counter nextPlayer) {
-		this.UpdateView(nextPlayer, board);
+		this.updateView(board);
 	}
 
 	@Override
@@ -123,7 +134,7 @@ public class BoardPanel extends JPanel implements GameObserver{
 	@Override
 	public void onUndo(ReadOnlyBoard board, Counter nextPlayer,
 			boolean undoPossible) {
-		this.UpdateView(nextPlayer, board);
+		this.updateView(board);
 	}
 
 	@Override
@@ -133,12 +144,12 @@ public class BoardPanel extends JPanel implements GameObserver{
 
 	@Override
 	public void onAttachToObserved(ReadOnlyBoard board, Counter turn) {
-		this.UpdateView(turn, board);	
+		this.createButtons(board);
 	}
 
 	@Override
 	public void reset(ReadOnlyBoard board, Counter player, Boolean undoPossible) {
-		this.UpdateView(player, board);		
+		this.createButtons(board);
 	}
 }
 
