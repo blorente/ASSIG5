@@ -107,7 +107,7 @@ public class BoardPanel extends JPanel implements GameObserver{
 			button.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "white.png"));
 			break;
 		default:
-			
+			button.setIcon(null);
 			break;
 		}
 	}	
