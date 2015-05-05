@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import tp.pr5.control.WindowController;
@@ -64,15 +66,15 @@ public class BoardPanel extends JPanel implements GameObserver{
 			break;
 		}
 		
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (active) {
-					ctrl.makeMove(col + 1, row + 1, player);
-				}	
-			}
-		});
-		
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (active) {
+						ctrl.makeMove(col + 1, row + 1, player);
+					}	
+				}
+			});
+			
 		return button;		
 	}
 
@@ -113,8 +115,9 @@ public class BoardPanel extends JPanel implements GameObserver{
 
 	@Override
 	public void onMoveError(String msg) {
-		// TODO Auto-generated method stub
-		
+		JOptionPane.showMessageDialog(new JFrame(), 
+				msg, "Invalid move!",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override

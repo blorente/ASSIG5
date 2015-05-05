@@ -45,13 +45,11 @@ public class ConsoleController extends Controller {
 			case MOVE:
 				Move mov = players[this.numPlayer].getMove(
 						this.game.getBoard(), this.game.getTurn());
-				try {
-					this.game.executeMove(mov);
-					this.numPlayer = this.getNextPlayerIndex(this.game
-							.getTurn());
-				} catch (InvalidMove e) {
-					System.err.println(e.getMessage());
-				}
+			
+				this.game.executeMove(mov);
+				this.numPlayer = this.getNextPlayerIndex(this.game
+						.getTurn());
+			
 				break;
 			case UNDO:
 				correctUndo = this.game.undo();			

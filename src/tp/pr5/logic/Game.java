@@ -49,7 +49,7 @@ public class Game implements Observable<GameObserver> {
 	}
 
 	// Executes the move indicated by the column number provided as argument.
-	public void executeMove(Move move) throws InvalidMove {
+	public void executeMove(Move move) {
 		// Check whether column is valid
 		if (this.turn != move.getPlayer()) {
             //Uncomment in case we need an exception
@@ -61,10 +61,18 @@ public class Game implements Observable<GameObserver> {
             }
 		}
 		if (this.draw) {
-			throw new InvalidMove("is a draw");
+			 for (GameObserver o : this.observers) {
+	                o.onMoveError("It's a draw.");
+	         }			
 		}
 		if (!this.isFinished())  {
-			move.executeMove(this.board);
+			try {
+				move.executeMove(this.board);
+			} catch (InvalidMove e) {
+				for (GameObserver o : this.observers) {
+	                o.onMoveError(e.getMessage());
+	            }
+			}
             for (GameObserver o : this.observers) {
                 o.moveExecFinished(this.board, this.turn, this.rules.nextTurn(this.turn, this.board));
             }
@@ -88,12 +96,10 @@ public class Game implements Observable<GameObserver> {
 				this.turn = this.rules.nextTurn(this.turn, this.board);
 			}
 		} else {
-            //throw new InvalidMove("Invalid move: The game is already finished");
-
             //Notify observers
             for (GameObserver o : this.observers) {
                 o.onMoveError("Invalid move: The game is already finished");
-            }
+            }            
         }
 	}
 
