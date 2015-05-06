@@ -37,20 +37,24 @@ public class ConsoleController extends Controller {
 	@Override
 	public void run() {
 		Instruction inst = Instruction.ERROR;
+		boolean correctUndo;
+		
 		while (!this.game.isFinished() && !(inst.equals(Instruction.EXIT))) {
             inst = readInstruction(this.in);
 			switch (inst) {
 			case MOVE:
 				Move mov = players[this.numPlayer].getMove(
 						this.game.getBoard(), this.game.getTurn());
-			
-				this.game.executeMove(mov);
-				this.numPlayer = this.getNextPlayerIndex(this.game
-						.getTurn());
-			
+				try {
+					this.game.executeMove(mov);
+					this.numPlayer = this.getNextPlayerIndex(this.game
+							.getTurn());
+				} catch (InvalidMove e) {
+					System.err.println(e.getMessage());
+				}
 				break;
 			case UNDO:
-				this.game.undo();			
+				correctUndo = this.game.undo();			
 				break;
 			case RESTART:
 				this.game.reset(this.rules);

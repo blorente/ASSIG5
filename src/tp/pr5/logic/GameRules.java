@@ -50,6 +50,7 @@ public interface GameRules {
 	 * @param b
 	 *            Current board state
 	 * @return next player to place a counter
+	 * @throws InvalidMove 
 	 */
-	public Counter nextTurn(Counter lastPlaced, Board b);
+	public Counter nextTurn(Counter lastPlaced, Board b) throws InvalidMove;
 }

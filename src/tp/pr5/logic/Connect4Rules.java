@@ -79,19 +79,7 @@ public class Connect4Rules implements GameRules {
 	 * tp.pr2.logic.Board) Traverses the board looking for n empty cell
 	 */
 	public boolean isDraw(Counter lastPlaced, Board b) {
-		boolean full = true;
-		int x = Board.MINWIDTH, y = b.getHeight();
-		while ((y >= Board.MINHEIGHT) && full) {
-			while ((x <= b.getWidth() && full)) {
-				if (b.getPosition(x, y) == Counter.EMPTY) {
-					full = false;
-				}
-				x++;
-			}
-			x = Board.MINWIDTH;
-			y--;
-		}
-		return full;
+		return Util.isFull(b);
 	}
 
 	/*

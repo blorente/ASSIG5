@@ -18,4 +18,19 @@ public enum Counter {
         }
         return word;
     }
+    
+    public Counter getOpponent(Counter counter) {
+    	Counter opponent = null;
+    	switch (counter) {
+		case WHITE:
+			opponent = Counter.BLACK;
+			break;
+		case BLACK:
+			opponent = Counter.WHITE;
+		default:
+			break;
+		}
+    	return opponent;
+    }
+    
 }

@@ -25,8 +25,10 @@ public class WindowController extends Controller {
 	
 	public void makeMove(int col, int row, Counter colour) { 
 		Move move = this.factory.createMove(col, row, colour);
-		
-		this.game.executeMove(move);		
+		try { 
+			this.game.executeMove(move);
+		} catch ( InvalidMove e) { 
+		} 
 	}
 	
 	public void reset(GameRules rules) { 
@@ -69,8 +71,11 @@ public class WindowController extends Controller {
 	}
 	
 	public void randomMove() {
-		Move move = random.getMove(this.game.getBoard(), this.game.getTurn());		
-		this.game.executeMove(move);		
+		Move move = random.getMove(this.game.getBoard(), this.game.getTurn());
+		try {
+			this.game.executeMove(move);
+		} catch (InvalidMove e) {
+		}
 	}
 	@Override
 	public void run() {
@@ -80,9 +85,5 @@ public class WindowController extends Controller {
 
     public GameRules getRules() {
         return rules;
-    }
-    
-    public Counter getPlayer() {
-    	return this.game.getTurn();
     }
 }

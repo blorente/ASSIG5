@@ -9,7 +9,8 @@ import tp.pr5.logic.Move;
 import tp.pr5.logic.ReadOnlyBoard;
 
 public class RandomGravityPlayer implements Player {
-
+	
+	@Override
 	public Move getMove(ReadOnlyBoard board, Counter colour) {
 		Random rand = new Random();
 		int col, row;
