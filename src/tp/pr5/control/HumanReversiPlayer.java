@@ -3,7 +3,6 @@ package tp.pr5.control;
 import java.util.Scanner;
 
 import tp.pr5.logic.Counter;
-import tp.pr5.logic.GravityMove;
 import tp.pr5.logic.Move;
 import tp.pr5.logic.ReadOnlyBoard;
 import tp.pr5.logic.ReversiMove;

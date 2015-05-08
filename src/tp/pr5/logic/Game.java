@@ -49,7 +49,7 @@ public class Game implements Observable<GameObserver> {
 	}
 
 	// Executes the move indicated by the column number provided as argument.
-	public void executeMove(Move move) throws InvalidMove {
+	public void executeMove(Move move) throws InvalidMove  {
 		// Check whether column is valid
 		if (this.turn != move.getPlayer()) {
             //Uncomment in case we need an exception
@@ -85,6 +85,7 @@ public class Game implements Observable<GameObserver> {
                 }
 			}
 			if (this.winner == Counter.EMPTY && !this.finished) {
+
 				this.turn = this.rules.nextTurn(this.turn, this.board);
 			}
 		} else {
@@ -98,7 +99,7 @@ public class Game implements Observable<GameObserver> {
 	}
 
     // Undo the last movement executed
-    public boolean undo() throws InvalidMove {
+    public boolean undo() throws InvalidMove{
         boolean success = false;
         if (!this.undoStack.isEmpty()) {
             Move mov = this.undoStack.getLastElement();

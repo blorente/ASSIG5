@@ -13,7 +13,6 @@ public class WindowController extends Controller {
 	private GameTypeFactory factory;
 	private GameRules rules;
 	private Player random;
-	private MainWindow window;
 	
 	public WindowController (GameTypeFactory factory, Game game) {
 		this.game = game;
@@ -25,9 +24,10 @@ public class WindowController extends Controller {
 	
 	public void makeMove(int col, int row, Counter colour) { 
 		Move move = this.factory.createMove(col, row, colour);
-		try { 
+		try {
 			this.game.executeMove(move);
-		} catch ( InvalidMove e) { 
+		} catch (InvalidMove e) {
+			// TODO Auto-generated catch block
 		} 
 	}
 	
@@ -36,7 +36,11 @@ public class WindowController extends Controller {
 	}
 	
 	public void undo() {
-		this.game.undo();
+		try {
+			this.game.undo();
+		} catch (InvalidMove e) {
+			// TODO Auto-generated catch block
+		}
 	}
 	
 	public void changeGame (Instruction instruction, int width, int height) {
@@ -60,6 +64,12 @@ public class WindowController extends Controller {
 			this.game.reset(this.rules);
 			this.random = this.factory.createRandomPlayer();
 			break;
+		case PLAY_RV:
+			this.factory = new ReversiFactory();
+			this.rules = this.factory.createRules();
+			this.game.reset(rules);
+			this.random = this.factory.createRandomPlayer();
+			break;
 		default:
 			break;
 		
@@ -75,11 +85,13 @@ public class WindowController extends Controller {
 		try {
 			this.game.executeMove(move);
 		} catch (InvalidMove e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	@Override
 	public void run() {
-		this.window = new MainWindow(game, this);
+		new MainWindow(game, this);
 		
 	}
 

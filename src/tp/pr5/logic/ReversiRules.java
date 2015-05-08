@@ -11,6 +11,10 @@ public class ReversiRules implements GameRules {
 	@Override
 	public Board newBoard() {
 		Board board = new Board(ReversiRules.DIMX, ReversiRules.DIMY);
+		board.setPosition(4, 4, Counter.WHITE);
+		board.setPosition(5, 5, Counter.WHITE);//I place the 4 counters of the beginning
+		board.setPosition(4, 5, Counter.BLACK);
+		board.setPosition(5, 4, Counter.BLACK);
 		return board;
 	}
 
@@ -79,23 +83,16 @@ public class ReversiRules implements GameRules {
 
 	@Override
 	public Counter nextTurn(Counter lastPlaced, Board b) throws InvalidMove {
-		Counter next = Counter.EMPTY;
 		if (lastPlaced == Counter.BLACK) {
-			if (Util.hasMove(b, lastPlaced)) {
-				next = Counter.WHITE; //TODO we have to catch the exceptions
-			}
-			else {
-				throw new InvalidMove("White cannot move.");
+			if (Util.hasMove(b, lastPlaced.getOpponent(lastPlaced))) {
+				lastPlaced = Counter.WHITE; 
 			}
 		} else if (lastPlaced == Counter.WHITE) {
-			if (Util.hasMove(b, lastPlaced)) {
-				next = Counter.BLACK;
-			}
-			else {
-				throw new InvalidMove("Black cannot move.");
+			if (Util.hasMove(b, lastPlaced.getOpponent(lastPlaced))) {
+				lastPlaced = Counter.BLACK;
 			}
 		}
-		return next;
+		return lastPlaced;
 	}
 
 }

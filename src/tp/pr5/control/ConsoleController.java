@@ -7,7 +7,6 @@ import tp.pr5.logic.Game;
 import tp.pr5.logic.GameRules;
 import tp.pr5.logic.InvalidMove;
 import tp.pr5.logic.Move;
-import tp.pr5.views.console.ConsoleView;
 
 public class ConsoleController extends Controller {
 
@@ -20,8 +19,8 @@ public class ConsoleController extends Controller {
 	private int numPlayer;
 	private String[] tokens;
 	
-	private ConsoleView view;
-
+	//private ConsoleView view;
+	
 	public ConsoleController(GameTypeFactory factory, Game g) {
 		this.game = g;
 		this.factory = factory;
@@ -31,7 +30,7 @@ public class ConsoleController extends Controller {
 		this.initializePlayers();
 		this.numPlayer = 0;
 		this.tokens = null;
-		this.view = new ConsoleView(g, this);
+		//this.view = new ConsoleView(g, this);
 	}
 
 	@Override
@@ -54,7 +53,11 @@ public class ConsoleController extends Controller {
 				}
 				break;
 			case UNDO:
-				correctUndo = this.game.undo();			
+				try {
+					correctUndo = this.game.undo();
+				} catch (InvalidMove e1) {
+					// TODO Invalid next turn in reversi
+				}			
 				break;
 			case RESTART:
 				this.game.reset(this.rules);

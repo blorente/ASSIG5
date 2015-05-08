@@ -2,18 +2,14 @@ package tp.pr5.views.window;
 
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import tp.pr5.control.WindowController;
 import tp.pr5.logic.Counter;
@@ -22,8 +18,6 @@ import tp.pr5.logic.Observable;
 import tp.pr5.logic.ReadOnlyBoard;
 
 public class MainWindow extends JFrame implements GameObserver {
-	
-	public static final String ICONS_FILEPATH = "src/tp/pr5/icons/";
 	
 	/**
 	 * 
@@ -36,7 +30,7 @@ public class MainWindow extends JFrame implements GameObserver {
 	private JPanel quitPanel;
 	
 	public MainWindow(Observable<GameObserver> g, WindowController c) {	
-		super("[=] Assignment 5 [=]");
+		super("Assignment 4");
         this.setSize(700, 500);
 		this.controller = c;
 		this.game = g;
@@ -48,19 +42,14 @@ public class MainWindow extends JFrame implements GameObserver {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		this.setContentPane(mainPanel);
 		
-		JPanel contentPanel = new JPanel();
-		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));		
-		
-		this.brdPanel = new BoardPanel(this.controller, this.game);
-		this.ctrlPanel = new CtrlPanel(game, controller, controller.getRules());
+		this.brdPanel = new BoardPanel(this.controller, this.game);//Nested Class
+		this.ctrlPanel = new CtrlPanel(game, controller, controller.getRules()); // Nested Class
 		this.quitPanel = createQuitPanel();
 		
-		contentPanel.add(this.brdPanel);
-		contentPanel.add(this.ctrlPanel);
-		contentPanel.setVisible(true);
+		mainPanel.add(this.brdPanel, BorderLayout.CENTER);
+		mainPanel.add(this.ctrlPanel, BorderLayout.LINE_END);
+		mainPanel.add(this.quitPanel, BorderLayout.PAGE_END);
 		
-		mainPanel.add(contentPanel, BorderLayout.CENTER);
-		mainPanel.add(this.quitPanel, BorderLayout.PAGE_END);		
 		
 		mainPanel.setVisible(true);
 		this.setVisible(true);
@@ -71,7 +60,7 @@ public class MainWindow extends JFrame implements GameObserver {
 	private JPanel createQuitPanel() {
 		JPanel quitPanel = new JPanel();
 		JButton quit = new JButton("");
-		quit.setIcon(new ImageIcon(MainWindow.ICONS_FILEPATH + "exit.png"));
+		quit.setIcon(new ImageIcon("src/tp/pr5/icons/exit.png"));
 		quit.setToolTipText("Exit");
 		quit.addActionListener(new ActionListener() {
 			String[] options = {"Yes", "No"};

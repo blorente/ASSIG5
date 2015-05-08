@@ -167,12 +167,14 @@ public class Util {
 
 	public static boolean hasMove(Board b, Counter turn) {
 		boolean itHas = false;
-		int x = 0, y = 0;
-		while (!itHas && (y < b.getHeight())) {
-			while (!itHas && (x < b.getWidth())) {
+		int x, y = 1;
+		while (!itHas && (y <= b.getHeight())) {
+			x = 1;
+			while (!itHas && (x <= b.getWidth())) {
 				if(b.getPosition(x, y) == Counter.EMPTY) {
-					itHas = isPossibleMove(b, x++, y, turn);// I see if there is a move in the whole board
+					itHas = isPossibleMove(b, x, y, turn);// I see if there is a move in the whole board
 				}
+				x++;
 			}
 			y++;
 		}
@@ -189,11 +191,12 @@ public class Util {
 		Counter opponent = turn.getOpponent(turn);
 
 		while ((i < 3) && !possible) {
+			j = 0;
 			while ((j < 3) && !possible) {
 				posx = x; // I refresh the values of the positions every loop
 				posy = y;
 				firstChecked = true; // I need to check that there is one
-										// counter of the other player next to
+										// counter of the opponent next to
 										// the position
 
 				if (i == 0 && j == 0) {
@@ -202,7 +205,6 @@ public class Util {
 				dirx = DirectionX.values()[i]; // For every loop we check a
 												// different direction
 				diry = DirectionY.values()[j];
-			}
 			while ((posx >= Board.MINWIDTH) && (posy >= Board.MINHEIGHT)
 					&& (posx <= board.getWidth()) && (posy <= board.getHeight())
 					&& !possible) {
@@ -219,12 +221,15 @@ public class Util {
 					}
 					if (board.getPosition(posx, posy) == turn) {
 						possible = true; // If after all the opponent counters
-											// there is the turn counter it is a
-											// valid move
+										// there is the turn counter it is a
+										// valid move
 					}
 				}
 
 			}
+			j++;
+			}
+			i++;
 		}
 		return possible;
 	}

@@ -58,6 +58,9 @@ public enum Instruction {
 			break;
 		case "Complica":
 			instruction = PLAY_CO;
+			break;
+		case "Reversi":
+			instruction = PLAY_RV;
 		}
 		return instruction;
 		

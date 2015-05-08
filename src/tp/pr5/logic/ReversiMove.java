@@ -14,30 +14,27 @@ public class ReversiMove extends Move {
 		this.setCol(moveColumn);
 		this.setPlayer(moveColour);
 		this.setRow(moveRow);
+		this.colsChanged = new int[64];
+		this.rowsChanged = new int[64];
 	}
 
 	@Override
 	public void executeMove(Board board) throws InvalidMove {
-		if (board.getPosition(this.getCol(), this.row) != Counter.EMPTY) {
-			if (Util.isPossibleMove(board, this.getCol(), this.row,
-					this.getPlayer())) {
+		if (board.getPosition(this.getCol(), this.row) == Counter.EMPTY) {
+			if (Util.isPossibleMove(board, this.getCol(), this.row, this.getPlayer())) {
 				this.changeCounters(board);
 			} else {
-				throw new InvalidMove("Invalid move: position ("
-						+ this.getCol() + ", " + this.getRow()
-						+ ") is not gaining opponent counters");
+				throw new InvalidMove("Invalid move: position (" + this.getCol() + ", " + this.getRow() + ") is not gaining opponent counters");
 			}
 		} else {
-			throw new InvalidMove("Invalid move: position (" + this.getCol()
-					+ ", " + this.getRow() + ") is already occupied.");
+			throw new InvalidMove("Invalid move: position (" + this.getCol() + ", " + this.getRow() + ") is already occupied.");
 		}
 	}
 
 	@Override
 	public void undo(Board board) {
 		for (int i = 0; i < this.colsChanged.length; i++) {
-			board.setPosition(this.colsChanged[i], this.rowsChanged[i], this
-					.getPlayer().getOpponent(this.getPlayer()));
+			board.setPosition(this.colsChanged[i], this.rowsChanged[i], this.getPlayer().getOpponent(this.getPlayer()));
 		}
 		board.setPosition(this.getCol(), this.getRow(), Counter.EMPTY);
 	}
@@ -47,6 +44,7 @@ public class ReversiMove extends Move {
 		int posx = this.getCol(), posy = this.row;
 		DirectionX dirx = null;
 		DirectionY diry = null;
+		int changedCounters = 0;
 		Counter opponent = this.getPlayer().getOpponent(this.getPlayer());
 
 		for (int i = 0; i < 3; i++) {
@@ -61,7 +59,6 @@ public class ReversiMove extends Move {
 				dirx = DirectionX.values()[i]; // For every loop we check a
 												// different direction
 				diry = DirectionY.values()[j];
-			}
 			while ((posx >= Board.MINWIDTH) && (posy >= Board.MINHEIGHT)
 					&& (posx <= board.getWidth())
 					&& (posy <= board.getHeight())) {
@@ -81,19 +78,21 @@ public class ReversiMove extends Move {
 						// counter then I change the counters
 						board.setPosition(this.getCol(), this.getRow(),
 								this.getPlayer());
-						dirx.invertDirection(dirx);
-						diry.invertDirection(diry);
-						while (board.getPosition(posx, posy) == this
-								.getPlayer()) {
+						dirx = dirx.invertDirection(dirx);
+						diry = diry.invertDirection(diry);
+
+						do {
 							posx = posx + Util.convertDirX(dirx);
 							posy = posy + Util.convertDirY(diry);
 							board.setPosition(posx, posy, this.getPlayer());
-							this.colsChanged[this.colsChanged.length] = posx;
-							this.rowsChanged[this.rowsChanged.length] = posy;
-						}
+							this.colsChanged[changedCounters] = posx;
+							this.rowsChanged[changedCounters++] = posy;
+						}while (board.getPosition(posx + Util.convertDirX(dirx), posy + Util.convertDirY(diry)) != this.getPlayer());
+						posx = Board.MINWIDTH - 1; // I exit the loop
 					}
 				}
 
+			}
 			}
 		}
 	}
