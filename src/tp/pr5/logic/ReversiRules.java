@@ -27,26 +27,26 @@ public class ReversiRules implements GameRules {
 	public Counter winningMove(Move lastMove, Board b) {
 		Counter winner = Counter.EMPTY;
 		if (Util.isFull(b)) {
-			int x = Board.MINWIDTH, y = b.getHeight();
+			int x = b.getWidth(), y = b.getHeight();
 			int blacks = 0, whites = 0;
-			int numOfCountersToWin = (Board.MINHEIGHT * Board.MINWIDTH) / 2;
+			int numOfCountersToWin = ((x * y) / 2) + 1;
 			while ((y >= Board.MINHEIGHT) && (winner == Counter.EMPTY)) {
-				while ((x <= b.getWidth()) && (winner == Counter.EMPTY)) {
+				while ((x >= Board.MINWIDTH) && (winner == Counter.EMPTY)) {
 					if (b.getPosition(x, y) == Counter.BLACK) {
 						blacks++;
 					}
 					else {
 						whites++;
 					}
-					if (blacks > numOfCountersToWin){
+					if (blacks == numOfCountersToWin){
 						winner = Counter.BLACK;
 					}
-					if (whites > numOfCountersToWin) {
+					if (whites == numOfCountersToWin) {
 						winner = Counter.WHITE;
 					}
-					x++;
+					x--;
 				}
-				x = Board.MINWIDTH;
+				x = b.getWidth();
 				y--;
 			}
 		}
@@ -58,9 +58,9 @@ public class ReversiRules implements GameRules {
 		boolean draw = false;
 		if (Util.isFull(b)) {
 			draw = true;
-			int x = Board.MINWIDTH, y = b.getHeight();
+			int x = b.getWidth(), y = b.getHeight();
 			int blacks = 0, whites = 0;
-			int numOfCountersToWin = (Board.MINHEIGHT * Board.MINWIDTH) / 2;
+			int numOfCountersToWin = ((x * y) / 2) + 1;
 			while ((y >= Board.MINHEIGHT) && draw) {
 				while ((x <= b.getWidth()) && draw) {
 					if (b.getPosition(x, y) == Counter.BLACK) {
@@ -69,12 +69,12 @@ public class ReversiRules implements GameRules {
 					if (b.getPosition(x, y) == Counter.WHITE) {
 						whites++;
 					}
-					if ((whites > numOfCountersToWin) || (blacks > numOfCountersToWin)) {
+					if ((whites == numOfCountersToWin) || (blacks == numOfCountersToWin)) {
 						draw = false;
 					}
-					x++;
+					x--;
 				}
-				x = Board.MINWIDTH;
+				x = b.getWidth();
 				y--;
 			}
 		}

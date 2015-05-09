@@ -18,7 +18,7 @@ public class RandomReversiPlayer implements Player {
 		do {
 			col = rand.nextInt(board.getWidth()) + Board.getMinwidth();
 			row = rand.nextInt(board.getHeight()) + Board.getMinheight();
-		} while (Util.isPossibleMove(board, col, row, colour)); // In this while I search for a random column and row
+		} while (!Util.isPossibleMove(board, col, row, colour) || board.getPosition(col, row) != Counter.EMPTY); // In this while I search for a random column and row
 																// such that is a possible move
 		Move newMove = new ReversiMove(col, row, colour); // Then generate the move and return
 		return newMove;

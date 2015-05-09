@@ -86,7 +86,7 @@ public class WindowController extends Controller {
 			this.game.executeMove(move);
 		} catch (InvalidMove e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("asdfalskdfha");
 		}
 	}
 	@Override
