@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -54,7 +55,14 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		this.removeAll();
 		JPanel firstPanel = new JPanel();
         firstPanel.setLayout(new BoxLayout(firstPanel, BoxLayout.Y_AXIS));
-
+        
+        String[] instructions = {inst.toString(Instruction.PLAY_C4), 
+				inst.toString(Instruction.PLAY_CO), 
+				inst.toString(Instruction.PLAY_G),
+				inst.toString(Instruction.PLAY_RV)};
+        
+        String[] playerTypes = {"Human", "Automatic"};
+        
         //Crete Reset button
 		JButton reset = new JButton("");
 		reset.setIcon(new ImageIcon("src/tp/pr5/icons/reset.png"));
@@ -118,6 +126,50 @@ public class CtrlPanel extends JPanel implements GameObserver {
         cntrlButtonsPanel.add(reset);
         cntrlButtonsPanel.add(undo);
         cntrlButtonsPanel.add(random);
+        
+        //Create panel to change white player
+        JLabel whitePlayerLabel = new JLabel("WHITE player: ");
+        
+        final JComboBox<String> whitePlayer = new JComboBox<String>(playerTypes);
+        whitePlayer.setPreferredSize(new Dimension(30, 10));
+        whitePlayer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String player = (String)whitePlayer.getSelectedItem();
+				if (player.equals("Human")) {
+					//Change player to human
+				} else if (player.equals("Automatic")) {
+					//Change player to automatic
+				}
+			}
+		});
+        
+        JPanel whitePanel = new JPanel();
+        whitePanel.setLayout(new BoxLayout(whitePanel, BoxLayout.X_AXIS));
+        whitePanel.add(whitePlayerLabel);
+        whitePanel.add(whitePlayer);
+        
+        //Create panel to change black player
+        JLabel blackPlayerLabel = new JLabel("BLACK player: ");
+        
+        final JComboBox<String> blackPlayer = new JComboBox<String>(playerTypes);
+        blackPlayer.setPreferredSize(new Dimension(30, 10));
+        blackPlayer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String player = (String)blackPlayer.getSelectedItem();
+				if (player.equals("Human")) {
+					//Change player to human
+				} else if (player.equals("Automatic")) {
+					//Change player to automatic
+				}
+			}
+		});
+        
+        JPanel blackPanel = new JPanel();
+        blackPanel.setLayout(new BoxLayout(blackPanel, BoxLayout.X_AXIS));
+        blackPanel.add(blackPlayerLabel);
+        blackPanel.add(blackPlayer);
 
         //Create horizontal subpanel for player selection
         JPanel playersPanel = new JPanel();
@@ -125,6 +177,9 @@ public class CtrlPanel extends JPanel implements GameObserver {
         playersPanel.setSize(this.getWidth(), 200);        
         playersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         playersPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
+                
+        playersPanel.add(whitePanel);
+        playersPanel.add(blackPanel);        
         
         JPanel playerAndControlPanel  = new JPanel();
         playerAndControlPanel.setLayout(new BoxLayout( playerAndControlPanel, BoxLayout.Y_AXIS));
@@ -140,11 +195,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 
         //Create panel to change game
 		JPanel secondPanel = new JPanel();
-		secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
-		String[] instructions = {inst.toString(Instruction.PLAY_C4), 
-									inst.toString(Instruction.PLAY_CO), 
-									inst.toString(Instruction.PLAY_G),
-									inst.toString(Instruction.PLAY_RV)};
+		secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));		
 		
 		final JTextArea height = new JTextArea(1, 1);
 		height.setText("Height");

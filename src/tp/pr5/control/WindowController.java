@@ -98,4 +98,8 @@ public class WindowController extends Controller {
     public GameRules getRules() {
         return rules;
     }
+    
+    public void setPlayerMode(Counter player, PlayerType type) {
+    	player.setMode(type);
+    }
 }
