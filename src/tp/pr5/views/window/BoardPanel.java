@@ -81,7 +81,6 @@ public class BoardPanel extends JPanel implements GameObserver{
 				this.add(createButton(i, j,  player, board.getPosition(i + 1, j + 1)), c);
 			}
 		}
-        this.revalidate();
         this.active = true;
 	}
 	
