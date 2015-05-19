@@ -4,16 +4,19 @@ import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
 
 import tp.pr5.control.PlayerType;
+import tp.pr5.control.WindowController;
 import tp.pr5.logic.Counter;
 
 public class PlayersModel implements ComboBoxModel<PlayerType> {
 
 	private Counter player;
 	private PlayerType selected;
+	private WindowController controller;
 	
-	public PlayersModel(Counter player) {
+	public PlayersModel(Counter player, WindowController controller) {
 		this.player = player;
 		this.selected = player.getMode();
+		this.controller = controller;
 	}
 	
 	@Override
@@ -50,13 +53,12 @@ public class PlayersModel implements ComboBoxModel<PlayerType> {
 	@Override
 	public void setSelectedItem(Object anItem) {
 		this.selected = (PlayerType) anItem;
-		
+		controller.setPlayerMode(this.player, this.selected);
 	}
 
 	@Override
 	public Object getSelectedItem() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.selected;
 	}
 
 }

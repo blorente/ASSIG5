@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import tp.pr5.control.Instruction;
+import tp.pr5.control.PlayerType;
 import tp.pr5.control.WindowController;
 import tp.pr5.logic.ComplicaRules;
 import tp.pr5.logic.Connect4Rules;
@@ -130,19 +131,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
         //Create panel to change white player
         JLabel whitePlayerLabel = new JLabel("WHITE player: ");
         
-        final JComboBox<String> whitePlayer = new JComboBox<String>(playerTypes);
-        whitePlayer.setPreferredSize(new Dimension(30, 10));
-        whitePlayer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String player = (String)whitePlayer.getSelectedItem();
-				if (player.equals("Human")) {
-					//Change player to human
-				} else if (player.equals("Automatic")) {
-					//Change player to automatic
-				}
-			}
-		});
+        JComboBox<PlayerType> whitePlayer = new JComboBox<PlayerType>(new PlayersModel(Counter.WHITE, this.controller)); 
         
         JPanel whitePanel = new JPanel();
         whitePanel.setLayout(new BoxLayout(whitePanel, BoxLayout.X_AXIS));
@@ -152,19 +141,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
         //Create panel to change black player
         JLabel blackPlayerLabel = new JLabel("BLACK player: ");
         
-        final JComboBox<String> blackPlayer = new JComboBox<String>(playerTypes);
-        blackPlayer.setPreferredSize(new Dimension(30, 10));
-        blackPlayer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String player = (String)blackPlayer.getSelectedItem();
-				if (player.equals("Human")) {
-					//Change player to human
-				} else if (player.equals("Automatic")) {
-					//Change player to automatic
-				}
-			}
-		});
+        JComboBox<PlayerType> blackPlayer = new JComboBox<PlayerType>(new PlayersModel(Counter.BLACK, this.controller));       
         
         JPanel blackPanel = new JPanel();
         blackPanel.setLayout(new BoxLayout(blackPanel, BoxLayout.X_AXIS));
