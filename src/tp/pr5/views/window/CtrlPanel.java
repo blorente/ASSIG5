@@ -43,6 +43,8 @@ public class CtrlPanel extends JPanel implements GameObserver {
 	private Instruction inst;
 	private int col, row;
 	private GameRules rules;
+    private JPanel cntrlButtonsPanel;
+    private JTextField turn;
 
     public CtrlPanel (Observable<GameObserver> g, WindowController c, GameRules rules) {
 		this.controller = c;
@@ -61,8 +63,6 @@ public class CtrlPanel extends JPanel implements GameObserver {
 				inst.toString(Instruction.PLAY_CO), 
 				inst.toString(Instruction.PLAY_G),
 				inst.toString(Instruction.PLAY_RV)};
-        
-        String[] playerTypes = {"Human", "Automatic"};
         
         //Crete Reset button
 		JButton reset = new JButton("");
@@ -118,7 +118,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		});
         
         //Create horizontal subpanel for Undo, Reset and Random buttons
-        JPanel cntrlButtonsPanel = new JPanel();
+        cntrlButtonsPanel = new JPanel();
         cntrlButtonsPanel.setLayout(new BoxLayout(cntrlButtonsPanel, BoxLayout.X_AXIS));
         cntrlButtonsPanel.setSize(this.getWidth(), 200);
         cntrlButtonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -131,18 +131,20 @@ public class CtrlPanel extends JPanel implements GameObserver {
         //Create panel to change white player
         JLabel whitePlayerLabel = new JLabel("WHITE player: ");
         
-        JComboBox<PlayerType> whitePlayer = new JComboBox<PlayerType>(new PlayersModel(Counter.WHITE, this.controller)); 
-        
+        JComboBox<PlayerType> whitePlayer = new JComboBox<PlayerType>(new PlayersModel(Counter.WHITE, this.controller));
+        whitePlayer.setMaximumSize(new Dimension(150, 30));
+
         JPanel whitePanel = new JPanel();
         whitePanel.setLayout(new BoxLayout(whitePanel, BoxLayout.X_AXIS));
         whitePanel.add(whitePlayerLabel);
         whitePanel.add(whitePlayer);
-        
+
         //Create panel to change black player
         JLabel blackPlayerLabel = new JLabel("BLACK player: ");
         
-        JComboBox<PlayerType> blackPlayer = new JComboBox<PlayerType>(new PlayersModel(Counter.BLACK, this.controller));       
-        
+        JComboBox<PlayerType> blackPlayer = new JComboBox<PlayerType>(new PlayersModel(Counter.BLACK, this.controller));
+        blackPlayer.setMaximumSize(new Dimension(150, 30));
+
         JPanel blackPanel = new JPanel();
         blackPanel.setLayout(new BoxLayout(blackPanel, BoxLayout.X_AXIS));
         blackPanel.add(blackPlayerLabel);
@@ -151,20 +153,19 @@ public class CtrlPanel extends JPanel implements GameObserver {
         //Create horizontal subpanel for player selection
         JPanel playersPanel = new JPanel();
         playersPanel.setLayout(new BoxLayout(playersPanel, BoxLayout.Y_AXIS));
-        playersPanel.setSize(this.getWidth(), 200);        
         playersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         playersPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
                 
         playersPanel.add(whitePanel);
-        playersPanel.add(blackPanel);        
+        playersPanel.add(blackPanel);
         
         JPanel playerAndControlPanel  = new JPanel();
-        playerAndControlPanel.setLayout(new BoxLayout( playerAndControlPanel, BoxLayout.Y_AXIS));
+        playerAndControlPanel.setLayout(new BoxLayout(playerAndControlPanel, BoxLayout.Y_AXIS));
         playerAndControlPanel.add(cntrlButtonsPanel);
         playerAndControlPanel.add(playersPanel);
         
         //Create The current player text
-        JTextField turn = new JTextField();
+        turn = new JTextField();
         turn.setEnabled(false);
         turn.setText(player + " plays");
         //Mount the text panel
@@ -319,7 +320,13 @@ public class CtrlPanel extends JPanel implements GameObserver {
 	@Override
 	public void moveExecFinished(ReadOnlyBoard board, Counter player,
 			Counter nextPlayer) {
-        initGUI(nextPlayer);
+        this.turn.setText(nextPlayer.toString() + " plays");
+        //If it was locked because it was a rendom move, unlock
+        for (Component c : this.cntrlButtonsPanel.getComponents()) {
+            c.setEnabled(true);
+        }
+
+        this.revalidate();
 	}
 
 	@Override
@@ -345,8 +352,16 @@ public class CtrlPanel extends JPanel implements GameObserver {
 	public void onAttachToObserved(ReadOnlyBoard board, Counter turn) {
         initGUI(turn);
 	}
-	
-	//----------
+
+    @Override
+    public void onRandomMoveBegin(ReadOnlyBoard board, Counter turn) {
+        for (Component c : this.cntrlButtonsPanel.getComponents()) {
+            c.setEnabled(false);
+        }
+        this.cntrlButtonsPanel.revalidate();
+    }
+
+    //----------
 	//NESTED CLASSES
 	//-----------
 	private class BoardMeasureHintFocusListener implements FocusListener {

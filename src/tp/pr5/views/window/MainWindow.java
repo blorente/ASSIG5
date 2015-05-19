@@ -115,7 +115,12 @@ public class MainWindow extends JFrame implements GameObserver {
 	@Override
 	public void onAttachToObserved(ReadOnlyBoard board, Counter turn) {
 		
-	}	
-		
-	
+	}
+
+	@Override
+	public void onRandomMoveBegin(ReadOnlyBoard board, Counter turn) {
+
+	}
+
+
 }

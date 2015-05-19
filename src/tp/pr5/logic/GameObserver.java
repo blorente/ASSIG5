@@ -76,4 +76,9 @@ public interface GameObserver {
      *          Read only board to display it for the first time.
      */
     void onAttachToObserved(ReadOnlyBoard board, Counter turn);
+
+    /**
+    Notify observers that a random move is being made.
+     */
+	void onRandomMoveBegin(ReadOnlyBoard board, Counter turn);
 }

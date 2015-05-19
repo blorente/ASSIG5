@@ -120,6 +120,11 @@ public class BoardPanel extends JPanel implements GameObserver{
 	}
 
 	@Override
+	public void onRandomMoveBegin(ReadOnlyBoard board, Counter turn) {
+
+	}
+
+	@Override
 	public void reset(ReadOnlyBoard board, Counter player, Boolean undoPossible) {
 		this.UpdateView(player, board);		
 	}

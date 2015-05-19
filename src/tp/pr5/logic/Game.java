@@ -1,5 +1,7 @@
 package tp.pr5.logic;
 
+import tp.pr5.control.PlayerType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,12 @@ public class Game implements Observable<GameObserver> {
 			throw new InvalidMove("is a draw");
 		}
 		if (!this.isFinished())  {
+			if (this.turn.getMode() == PlayerType.AUTO) {
+				//Notify the observers to lock the UI
+				for (GameObserver o : this.observers) {
+					o.onRandomMoveBegin(this.board, this.turn);
+				}
+			}
 			move.executeMove(this.board);
             for (GameObserver o : this.observers) {
                 o.moveExecFinished(this.board, this.turn, this.rules.nextTurn(this.turn, this.board));

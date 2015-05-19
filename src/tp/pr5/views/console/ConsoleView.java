@@ -67,7 +67,12 @@ public class ConsoleView implements GameObserver {
                 + " to move");
     }
 
-    private String convertTurnFirstUpper(String currentTurn) {
+	@Override
+	public void onRandomMoveBegin(ReadOnlyBoard board, Counter turn) {
+
+	}
+
+	private String convertTurnFirstUpper(String currentTurn) {
 		String out;
 		if (currentTurn.equals("WHITE")) {
 			out = "White";
