@@ -2,7 +2,7 @@ package tp.pr5.logic;
 
 public enum Counter {
     BLACK, EMPTY, WHITE;
-
+    
     public String toString(Counter counter) {
         String word;
         switch (counter) {

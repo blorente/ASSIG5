@@ -107,7 +107,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 				controller.randomMove();
 			}		
 		});
-
+        
         //Create horizontal subpanel for Undo, Reset and Random buttons
         JPanel cntrlButtonsPanel = new JPanel();
         cntrlButtonsPanel.setLayout(new BoxLayout(cntrlButtonsPanel, BoxLayout.X_AXIS));
@@ -119,6 +119,18 @@ public class CtrlPanel extends JPanel implements GameObserver {
         cntrlButtonsPanel.add(undo);
         cntrlButtonsPanel.add(random);
 
+        //Create horizontal subpanel for player selection
+        JPanel playersPanel = new JPanel();
+        playersPanel.setLayout(new BoxLayout(playersPanel, BoxLayout.Y_AXIS));
+        playersPanel.setSize(this.getWidth(), 200);        
+        playersPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playersPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        
+        JPanel playerAndControlPanel  = new JPanel();
+        playerAndControlPanel.setLayout(new BoxLayout( playerAndControlPanel, BoxLayout.Y_AXIS));
+        playerAndControlPanel.add(cntrlButtonsPanel);
+        playerAndControlPanel.add(playersPanel);
+        
         //Create The current player text
         JTextField turn = new JTextField();
         turn.setEnabled(false);
@@ -204,7 +216,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		secondPanel.add(change);
 		//Add all of the panles to the Central panel
 		this.add(firstPanel, BorderLayout.PAGE_START);
-        this.add(cntrlButtonsPanel, BorderLayout.CENTER);
+        this.add(playerAndControlPanel, BorderLayout.CENTER);
         this.add(secondPanel, BorderLayout.PAGE_END);
 		this.revalidate();
 	}
