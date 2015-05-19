@@ -1,5 +1,7 @@
 package tp.pr5.control;
 
+import org.omg.PortableServer.POAManagerPackage.State;
+
 import tp.pr5.logic.Counter;
 import tp.pr5.logic.Game;
 import tp.pr5.logic.GameRules;
@@ -13,6 +15,7 @@ public class WindowController extends Controller {
 	private GameTypeFactory factory;
 	private GameRules rules;
 	private Player random;
+	private Thread autoThread;
 	
 	public WindowController (GameTypeFactory factory, Game game) {
 		this.game = game;
@@ -29,6 +32,7 @@ public class WindowController extends Controller {
 		} catch (InvalidMove e) {
 			// TODO Auto-generated catch block
 		} 
+		automaticMove();
 	}
 	
 	public void reset(GameRules rules) { 
@@ -41,6 +45,7 @@ public class WindowController extends Controller {
 		} catch (InvalidMove e) {
 			// TODO Auto-generated catch block
 		}
+		automaticMove();
 	}
 	
 	public void changeGame (Instruction instruction, int width, int height) {
@@ -92,7 +97,7 @@ public class WindowController extends Controller {
 	@Override
 	public void run() {
 		new MainWindow(game, this);
-		
+		automaticMove();
 	}
 
     public GameRules getRules() {
@@ -101,5 +106,40 @@ public class WindowController extends Controller {
     
     public void setPlayerMode(Counter player, PlayerType type) {
     	player.setMode(type);
+    	automaticMove();
     }
+    
+    private void automaticMove () {
+    	if (game.getTurn().getMode() == PlayerType.HUMAN)
+    		 return;
+    	
+    	this.autoThread = new Thread () {
+    		public void run() {
+    			
+    			while (game.getTurn().getMode() == PlayerType.AUTO
+    					&& !game.isFinished()
+    					&& !this.isInterrupted()){
+    				try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    				if (!this.isInterrupted()) {
+    					randomMove();
+    				}
+    			}
+    		}
+    	};
+    	this.autoThread.start();
+    }
+       
+    private void stopAutoPlayer() {
+    	if (this.autoThread != null) {
+	    	this.autoThread.interrupt();
+	    	//Wait for the thread to end
+	    	while (this.autoThread.getState().equals(State.ACTIVE));
+    	}
+    }
+    
 }
