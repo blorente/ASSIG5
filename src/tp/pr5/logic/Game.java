@@ -103,7 +103,7 @@ public class Game implements Observable<GameObserver> {
             for (GameObserver o : this.observers) {
                 o.onMoveError("Invalid move: The game is already finished");
             }
-        }
+		}
 	}
 
     // Undo the last movement executed

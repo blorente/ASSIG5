@@ -247,11 +247,12 @@ public class CtrlPanel extends JPanel implements GameObserver {
 		this.add(firstPanel, BorderLayout.PAGE_START);
         this.add(playerAndControlPanel, BorderLayout.CENTER);
         this.add(secondPanel, BorderLayout.PAGE_END);
-		this.revalidate();
+		//this.revalidate();
 	}
 	
 	@Override
 	public void reset(ReadOnlyBoard board, Counter player, Boolean undoPossible) {
+		this.removeAll();
 		initGUI(player);
 	}
 
@@ -282,6 +283,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 					break;
 				}
                 this.controller.reset(this.rules);
+                this.revalidate();
             }
             else{
                 System.exit(0);
@@ -309,6 +311,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
 					break;
 				}
                 this.controller.reset(this.rules);
+                this.revalidate();
             }
             else{
                 System.exit(0);
@@ -358,7 +361,7 @@ public class CtrlPanel extends JPanel implements GameObserver {
         for (Component c : this.cntrlButtonsPanel.getComponents()) {
             c.setEnabled(false);
         }
-        this.cntrlButtonsPanel.revalidate();
+        //this.cntrlButtonsPanel.revalidate();
     }
 
     //----------

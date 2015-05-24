@@ -25,14 +25,16 @@ public class WindowController extends Controller {
 
 	}
 	
-	public void makeMove(int col, int row, Counter colour) { 
+	public void makeMove(int col, int row, Counter colour) {
+		if (this.game.getTurn().getMode() == PlayerType.HUMAN) {
 		Move move = this.factory.createMove(col, row, colour);
 		try {
 			this.game.executeMove(move);
 		} catch (InvalidMove e) {
 			// TODO Auto-generated catch block
 		} 
-		automaticMove();
+		}
+			automaticMove();
 	}
 	
 	public void reset(GameRules rules) { 
@@ -50,7 +52,6 @@ public class WindowController extends Controller {
 	
 	public void changeGame (Instruction instruction, int width, int height) {
 		switch (instruction) {
-		//TODO implementa lo que queda de la window
 		case PLAY_C4:
 			this.factory = new Connect4Factory();
 			this.rules = this.factory.createRules();
@@ -91,7 +92,6 @@ public class WindowController extends Controller {
 			this.game.executeMove(move);
 		} catch (InvalidMove e) {
 			// TODO Auto-generated catch block
-			System.out.println("asdfalskdfha");
 		}
 	}
 	@Override
@@ -106,12 +106,15 @@ public class WindowController extends Controller {
     
     public void setPlayerMode(Counter player, PlayerType type) {
     	player.setMode(type);
+    	if (type == PlayerType.HUMAN) {
+    		this.stopAutoPlayer();
+    	}
     	automaticMove();
     }
     
     private void automaticMove () {
     	if (game.getTurn().getMode() == PlayerType.HUMAN)
-    		 return;
+    		 return;   	
     	
     	this.autoThread = new Thread () {
     		public void run() {

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import tp.pr5.control.WindowController;
 import tp.pr5.logic.ComplicaRules;
@@ -75,10 +76,10 @@ public class BoardPanel extends JPanel implements GameObserver{
 		for (int i = 0; i < board.getWidth(); i++) {
 			this.c.gridx = i;
 			for (int j = 0; j < board.getHeight(); j++) {
-				//this.buttons[i][j] = createButton(i, j,  player, board.getPosition(i + 1, j + 1));
+				this.buttons[i][j] = createButton(i, j,  player, board.getPosition(i + 1, j + 1));
 				//setButtonDisabled(i,j, board.getPosition(i, j));
 				this.c.gridy = j;
-				this.add(createButton(i, j,  player, board.getPosition(i + 1, j + 1)), c);
+				this.add(buttons[i][j], c);
 			}
 		}
         this.active = true;
@@ -89,6 +90,7 @@ public class BoardPanel extends JPanel implements GameObserver{
 	public void onGameOver(ReadOnlyBoard board, Counter winner) {
 		this.active = false;
 		this.UpdateView(winner, board);
+		this.revalidate();
 	}
 
 	@Override
@@ -121,12 +123,20 @@ public class BoardPanel extends JPanel implements GameObserver{
 
 	@Override
 	public void onRandomMoveBegin(ReadOnlyBoard board, Counter turn) {
-
+			/*for (int i = 0; i < board.getWidth(); i++) {
+				for(int j = 0; j < board.getHeight(); j++) {
+					if (this.ctrl.getRules().getClass() == ComplicaRules.class || board.getPosition(i + 1, j + 1) == Counter.EMPTY) {
+					buttons[i][j].removeActionListener(buttons[i][j].getActionListeners()[0]);
+					}
+				}
+			
+			}*/
 	}
 
 	@Override
 	public void reset(ReadOnlyBoard board, Counter player, Boolean undoPossible) {
-		this.UpdateView(player, board);		
+		this.UpdateView(player, board);	
+		this.revalidate();
 	}
 }
 
